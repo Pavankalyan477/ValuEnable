@@ -2,13 +2,13 @@ const express=require("express")
 
 const router=express.Router();
 
-const Signup=require("../models/signup.model")
+const Signup=require("../models/signup.model.js")
 
 // Creating API for POST Data
 
 router.post("/signup", async (req,res)=>{
     let data=await Signup.create(req.body);
-    return req.status(201).send({data});
+    return res.status(201).send({data});
 })
 
 // Creating API for GET the Data

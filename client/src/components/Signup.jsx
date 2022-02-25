@@ -2,20 +2,22 @@ import React, { useState } from "react";
 import "./signup.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-
+import {axios} from "axios";
 import Button from "@mui/material/Button";
 //import Menu from "@mui/material/Menu";
 import Select from "@mui/material/Select";
 
 import MenuItem from "@mui/material/MenuItem";
-import { FormControl } from "@mui/material";
+
 export default function Signup() {
-  const [errorNumber, seterrorNumber] = useState(false);
   const [errorMail, seterrorMail] = useState(false);
   const [errorName, seterrorName] = useState(false);
-  const [value, setValue] = useState("");
+  const [post, setPost] = useState(null);
+ 
   const [mail, setMail] = useState("");
   const [Name, setName] = useState("");
+  const [role, setRole] = useState("");
+  const [password,setPassword]=useState("");
 
   const handleChangeMail = (e) => {
     setMail(e.target.value);
@@ -28,14 +30,7 @@ export default function Signup() {
     }
   };
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
-    if (/^\d+$/.test(e.target.value)) {
-      seterrorNumber(false);
-    } else {
-      seterrorNumber(true);
-    }
-  };
+
   // const [country, setCountry] = useState("India");
   // const handleChangeCountry = (event) => {
   //   setCountry(event.target.value);
@@ -50,6 +45,20 @@ export default function Signup() {
       seterrorName(false);
     }
   };
+
+  async function createPost() {
+    await axios
+      .post("http://localhost:3005/signup", {
+        username:Name,
+        role:role,
+        mail:mail,
+        password:password
+        
+      })
+      .then((response) => {
+        setPost(response.data);
+      });
+  }
   return (
     <>
       <div className="contact"> Contact us</div>
@@ -94,9 +103,9 @@ export default function Signup() {
                 id="demo-simple-select-standard"
                 label="Select Role"
                 placeholder="Select your Role"
-                multiline
-                // value={}
-                onChange={handleChange}
+               
+                 value={role}
+                onChange={(e)=>setRole(e.target.value)}
                
                 sx={{ m: 1, width:"45ch" }}
               >
@@ -131,13 +140,13 @@ export default function Signup() {
                 id="outlined-textarea"
                 label="Password"
                 multiline
-                value={mail}
-                // onChange={handleChangeMail}
-                helperText="Mail Should Not contain full stop"
+                value={password}
+                 onChange={(e)=>setPassword(e.target.value)}
+              
               />
             </div>
             <div>
-              <Button variant="contained" id="Submit_btn">
+              <Button variant="contained" id="Submit_btn" onClick={createPost}>
                 Submit
               </Button>
             </div>

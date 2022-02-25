@@ -1,15 +1,16 @@
 const express = require("express");
-
-const signup= require("./controllers/signup.controller")
 const app = express();
 app.use(express.json());
 
+const signup= require("./controllers/signup.controller.js")
 
 
 
 
-app.post("/", signup);
+
+
+app.use("/", signup);
 
 
 
-module.exports = app;
+module.exports = app
