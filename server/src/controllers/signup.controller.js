@@ -1,9 +1,8 @@
-const mongoose=require("mongoose");
-const { create } = require("../models/signup.model");
+const express=require("express")
 
 const router=express.Router();
 
-const Signup=require("./signin.model")
+const Signup=require("../models/signup.model")
 
 // Creating API for POST Data
 
@@ -20,5 +19,12 @@ router.get("/signup",async(req,res)=>{
     return res.status(200).send({data});
 })
 
+// Creating API for patch the Data
+
+router.patch("/signup:/id", async (req,res)=>{
+    let data=await Signup.findByIdAndUpdate(req.params.id,req.body,{new :true});
+    return res.status(201).send({data});
+})
 
 
+module.exports=router;

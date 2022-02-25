@@ -1,6 +1,6 @@
 const express = require("express");
 
-const {register, login} = require("./controllers/users.controller")
+const signup= require("./controllers/signup.controller")
 const app = express();
 app.use(express.json());
 
@@ -8,8 +8,8 @@ app.use(express.json());
 
 
 
-app.post("/register", register);
-app.post("/login", login);
+app.post("/", signup);
+
 
 
 module.exports = app;
